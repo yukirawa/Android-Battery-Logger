@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">電池記録器</string>
+    <string name="monitoring_channel_name">端末監視</string>
+    <string name="monitoring_channel_description">ユーザーが開始した端末状態の記録</string>
+</resources>

@@ -1,4 +1,3 @@
-/home/yukirawa/.bashrc: line 1: ]#: command not found
 # Android版 手机電池監視器 V1.0
 ## アーキテクチャ方向性設計書 — Android 17 / HyperOS 4 個人端末向け
 
@@ -229,7 +228,7 @@ Wi-Fi SSIDや利用中アプリを記録するため、ログの内容と保存�
 
 端末時刻が手動変更された場合も、単調増加時計で実際の経過を判断できるようにする。
 
-システムイベントから得た値を次のスナップショットへ引き継ぐ場合、前回値を現在の測定値と誤認させない。項目ごとに最終取得時刻または経過秒数を記録し、古い値はstale状態として扱う。
+システムイベントから得た値を次のスナップショットへ引き継ぐ場合、前回値を現在の測定値と誤認させない。項目ごとに最終取得時刻または経過秒数を記録する。Wi-Fi・モバイル回線のコールバックキャッシュは、最後の更新から5分を超えたら値を残したままstaleとし、permission_denied、disconnected、unsupportedを優先する。利用中アプリのageは最後のActivity再開からの継続時間を表し、UsageEventsで現在状態を再構成できている間はageだけを理由にstaleとしない。
 
 日別ファイル名の日付は端末ローカル日付を使う。レコードにはUTC時刻とUTCオフセットを残し、タイムゾーン変更後も分析時に元の時刻を再構成できるようにする。
 
@@ -283,7 +282,7 @@ schema_version,session_id,record_id,device_model,android_api_level,os_build,app_
 - 状態値はok、stale、permission_denied、disconnected、unsupported、unknown、errorを基本語彙とする。
 - 未接続、権限不足、非対応、値が古い状態を区別する。
 - foreground_age_sは最後にActivityが再開したイベントからの経過秒数、wifi_age_sとmobile_age_sは状態変更イベントからの経過秒数を記録する。
-- イベントで維持する接続状態は、切断・権限変更などの状態変化がない限り現在値として扱う。ageが増えただけではstaleにせず、取得元の状態を確認できない場合にstaleまたはunknownを使う。
+- Wi-Fi・モバイル回線の値は、イベントが5分間届かない場合にstaleとする。利用中アプリのageは状態継続時間のため、再開イベントから長時間経過してもpauseイベントがなく現在状態を再構成できる間はokとする。
 - UIに表示する「Unknown」などの文言とCSVの状態値を混在させない。
 
 ---
