@@ -1,0 +1,12 @@
+.gradle/
+.idea/
+local.properties
+**/build/
+*.iml
+captures/
+.externalNativeBuild/
+.cxx/
+coderebyu.md
+Android17_手机電池監視器_V1.0_設計書.md
+
+
