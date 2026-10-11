@@ -22,12 +22,9 @@ jobs:
           distribution: 'temurin'
           cache: gradle
 
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
-
       - name: Build Debug APK
         # デバッグビルドはデフォルトのデバッグキーストアで自動署名されるため、そのまま実機インストール可能です
-        run: ./gradlew assembleDebug
+        run: gradle assembleDebug
 
       - name: Create GitHub Release and Upload APK
         uses: softprops/action-gh-release@v2
